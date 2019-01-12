@@ -1,0 +1,121 @@
+openapi: "3.0.2"
+info:
+  title: 通帳API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Development Server
+paths:
+  /details:
+    get:
+      description: 明細をすべて取得する
+      operationId: getDetails
+      parameters:
+        - in: query
+          name: accountId
+          schema:
+            type: integer
+          description: 取得対象の口座ID
+      responses:
+        '200':
+          $ref: '#/components/responses/Details'
+    post:
+      description: 明細を作成する
+      operationId: createDetail
+      requestBody:
+        $ref: '#/components/requestBodies/Detail'
+      responses:
+        '201':
+          $ref: '#/components/responses/Detail'
+  /details/{detailId}:
+    get:
+      description: 明細を取得する
+      operationId: getDetail
+      parameters:
+        - $ref: '#/components/parameters/detailIdParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/Detail'
+components:
+  schemas:
+    Details:
+      type: object
+      properties:
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/Detail'
+    Detail:
+      type: object
+      properties:
+        detail:
+          $ref: '#/components/schemas/DetailProperties'
+      required:
+        - detail
+    DetailProperties:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        amount:
+          type: integer
+          example: 5000000000000000
+        created_at:
+          type: string
+          format: date-time
+          example: '2019-01-12T00:00:00Z'
+        description:
+          type: string
+          example: ｷﾕｳﾖ(ｺﾞｾﾞﾝﾁﾖｳｴﾝ
+      required:
+        - id
+        - amount
+        - created_at
+    DetailRequest:
+      type: object
+      properties:
+        amount:
+          type: integer
+          example: -12000
+        description:
+          type: string
+          example: ｽｲﾄﾞｳﾘﾖｳｷﾝ
+      required:
+        - amount
+  parameters:
+    detailIdParam:
+      name: detailId
+      in: path
+      description: 明細のID
+      required: true
+      schema:
+        type: integer
+    accountIdParam:
+      name: accountId
+      in: query
+      description: 口座のID
+      required: false
+      schema:
+        type: integer
+  requestBodies:
+    Detail:
+      description: 作成する明細
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DetailRequest'
+  responses:
+    Details:
+      description: 明細のリスト
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Details'
+    Detail:
+      description: 明細
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Detail'
