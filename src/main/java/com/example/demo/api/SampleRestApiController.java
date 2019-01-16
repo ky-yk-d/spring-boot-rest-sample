@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.domain.application.SampleApplicationService;
+import com.example.demo.application.SampleApplicationService;
+import com.example.demo.application.UserQueryService;
 
 @RestController
 @RequestMapping("api/v1")
@@ -20,15 +21,29 @@ public class SampleRestApiController {
 	
 	@Autowired
 	private SampleApplicationService sampleApplicationService;
+
+	@Autowired
+	private UserQueryService userQueryService;
 	
-	@RequestMapping(path = "{hogeId}/sample", method = RequestMethod.GET)
+	@RequestMapping(path = "sample", method = RequestMethod.GET)
 	public ResponseEntity<String> sample(
-			@PathVariable String hogeId,
 			@RequestParam Optional<List<String>> ym
 			){
 		
 		HttpStatus httpStatus = HttpStatus.OK;
 		String str = this.sampleApplicationService.sample();
 		return new ResponseEntity<String>(str, httpStatus);
+	}
+	
+	@RequestMapping(path = "users/{userId}", method = RequestMethod.GET)
+	public ResponseEntity<UserResource> getUser(
+			@PathVariable String userId
+			){
+		Optional<UserResource> user = this.userQueryService.getUser(userId);
+		
+		HttpStatus httpStatus;
+		httpStatus = user.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND;
+		return new ResponseEntity<UserResource>(user.get(), httpStatus);
+		
 	}
 }
