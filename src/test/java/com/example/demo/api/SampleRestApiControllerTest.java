@@ -2,6 +2,7 @@ package com.example.demo.api;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -16,13 +17,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.demo.application.SampleApplicationService;
-import com.example.demo.application.UserQueryService;
+import com.example.demo.query.UserQueryService;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(SampleRestApiController.class)
@@ -33,17 +35,26 @@ public class SampleRestApiControllerTest {
 	@MockBean
 	private SampleApplicationService sampleApplicationService;
 	
+	@InjectMocks
+	private SampleRestApiController controller;
 	@MockBean
+	@Qualifier("mockUserQueryServiceImpl")
 	private UserQueryService queryService;
 	
 	@BeforeEach
 	void setUp() throws Exception{
+		System.out.println("テスト開始");
 		UserResource kent = new UserResource("1","Kent Beck", "19610331");
 		UserResource erich = new UserResource("2","Erich Gamma ", "19610313");
 		UserResource alistair = new UserResource("3","Alistair Cockburn", "195311119");
 		doReturn(Optional.of(kent)).when(queryService).getUser("1");
 		doReturn(Optional.of(erich)).when(queryService).getUser("2");
 		doReturn(Optional.of(alistair)).when(queryService).getUser("3");
+	}
+	
+	@Test
+	public void 通るはずのテスト() throws Exception {
+		assertTrue(true);
 	}
 	
 	@Test
