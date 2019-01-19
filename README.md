@@ -34,6 +34,7 @@
   - [ ] Spock
 - その他
   - [ ] Lombok
+  - [x] [AutoValue](https://github.com/google/auto/tree/master/value)
 
 
 ## 参考資料（参考にした／参考にする／参考にしてください）
