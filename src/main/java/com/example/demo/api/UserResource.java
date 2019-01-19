@@ -1,65 +1,28 @@
 package com.example.demo.api;
 
-public class UserResource {
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.auto.value.AutoValue;
 
-	String userId;
-	String fullName;
-	String birthDate;
+@AutoValue
+public abstract class UserResource {
 
-	public UserResource(String userId, String fullName, String birthDate) {
-		this.userId = userId;
-		this.fullName = fullName;
-		this.birthDate = birthDate;
-	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((birthDate == null) ? 0 : birthDate.hashCode());
-		result = prime * result + ((fullName == null) ? 0 : fullName.hashCode());
-		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
-		return result;
-	}
+	@JsonProperty("user_id") // @JsonPropertyでJSONにマップしたときのプロパティ名を指定できる
+	public abstract String user_id();
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof UserResource))
-			return false;
-		UserResource other = (UserResource) obj;
-		if (birthDate == null) {
-			if (other.birthDate != null)
-				return false;
-		} else if (!birthDate.equals(other.birthDate))
-			return false;
-		if (fullName == null) {
-			if (other.fullName != null)
-				return false;
-		} else if (!fullName.equals(other.fullName))
-			return false;
-		if (userId == null) {
-			if (other.userId != null)
-				return false;
-		} else if (!userId.equals(other.userId))
-			return false;
-		return true;
-	}
+	@JsonProperty("full_name")
+	public abstract String full_name();
 
-	public String getUserId() {
-		return userId;
-	}
+	@JsonProperty("birth_date")
+	public abstract String birth_date();
 
-	public String getFullName() {
-		return fullName;
-	}
-
-	public String getBirthDate() {
-		return birthDate;
-	}
+	@JsonCreator // ディシリアライズするときに使用されるメソッドを指定している
+	public static UserResource create(
+			@JsonProperty("user_id")String user_id,
+			@JsonProperty("full_name")String full_name,
+			@JsonProperty("birth_date")String birth_date) {
+		return new AutoValue_UserResource(user_id, full_name, birth_date);
+	};
 	
 
 }

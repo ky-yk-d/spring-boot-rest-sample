@@ -43,9 +43,9 @@ public class SampleRestApiControllerTest {
 	@BeforeEach
 	void setUp() throws Exception{
 		System.out.println("テスト開始");
-		UserResource kent = new UserResource("1","Kent Beck", "19610331");
-		UserResource erich = new UserResource("2","Erich Gamma ", "19610313");
-		UserResource alistair = new UserResource("3","Alistair Cockburn", "195311119");
+		UserResource kent = UserResource.create("1","Kent Beck", "19610331");
+		UserResource erich = UserResource.create("2","Erich Gamma ", "19610313");
+		UserResource alistair = UserResource.create("3","Alistair Cockburn", "195311119");
 		doReturn(Optional.of(kent)).when(queryService).getUser("1");
 		doReturn(Optional.of(erich)).when(queryService).getUser("2");
 		doReturn(Optional.of(alistair)).when(queryService).getUser("3");
@@ -74,7 +74,11 @@ public class SampleRestApiControllerTest {
 	@Test
 	public void クエリに1を投げるとKentが返ってくる() throws Exception {
 		mockMvc.perform(get("/api/v1/users/1"))
-			.andExpect(content().string(containsString("Kent Beck")));
+			.andExpect(content().string(containsString("Kent Beck")))
+			.andExpect(content().string(containsString("user_id")))
+			.andExpect(content().string(containsString("full_name")))
+			.andExpect(content().string(containsString("birth_date")))
+			.andExpect(content().string(not(containsString("get"))));
 	}
 	
 }

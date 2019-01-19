@@ -17,9 +17,9 @@ public class MockUserQueryServiceImpl implements UserQueryService {
 
 	public MockUserQueryServiceImpl() {
 		this.users = new ArrayList<>();
-		this.users.add(new UserResource("1","Kent Beck", "19610331"));
-		this.users.add(new UserResource("2","Erich Gamma ", "19610313"));
-		this.users.add(new UserResource("3","Alistair Cockburn", "195311119"));
+		this.users.add(UserResource.create("1","Kent Beck", "19610331"));
+		this.users.add(UserResource.create("2","Erich Gamma ", "19610313"));
+		this.users.add(UserResource.create("3","Alistair Cockburn", "195311119"));
 	}
 
 
@@ -27,7 +27,7 @@ public class MockUserQueryServiceImpl implements UserQueryService {
 	@Override
 	public Optional<UserResource> getUser(String userId) {
 		return Optional.ofNullable(users.stream()
-				.filter(user -> user.getUserId().equals(userId))
+				.filter(user -> user.user_id().equals(userId))
 				.findFirst()
 				.orElse(null));
 	}

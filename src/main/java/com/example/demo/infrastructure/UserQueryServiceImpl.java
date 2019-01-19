@@ -12,7 +12,7 @@ public class UserQueryServiceImpl implements UserQueryService {
 
 	@Override
 	public Optional<UserResource> getUser(String userId) {
-		return Optional.of(new UserResource(userId, "Full Name", "20001010"));
+		return Optional.of(UserResource.create(userId, "Full Name", "20001010"));
 	}
 
 }
