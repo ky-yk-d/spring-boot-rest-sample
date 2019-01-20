@@ -11,12 +11,12 @@ public abstract class Amount {
 		return new AutoValue_Amount(value);
 	}
 	
-	public Amount add(Amount other) {
+	public Amount plus(Amount other) {
 		long result = Math.addExact(value(), other.value());
 		return new AutoValue_Amount(result);
 	}
 	
-	public Amount substract(Amount other) {
+	public Amount minus(Amount other) {
 		long result = Math.subtractExact(value(), other.value());
 		return new AutoValue_Amount(result);
 	}

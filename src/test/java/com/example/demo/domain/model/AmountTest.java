@@ -30,7 +30,7 @@ class AmountTest {
 	void 加法のテスト3たす4と7が等しい(){
 		Amount three = Amount.create(3);
 		Amount four = Amount.create(4);
-		Amount actual = three.add(four);
+		Amount actual = three.plus(four);
 		assertEquals(Amount.create(7), actual);
 	}
 	
@@ -38,7 +38,7 @@ class AmountTest {
 	void 加法のテスト() {
 		Amount minusOne = Amount.create(-1);
 		Amount minusThree = Amount.create(-3);
-		Amount actual = minusOne.add(minusThree);
+		Amount actual = minusOne.plus(minusThree);
 		assertNotEquals(Amount.create(-5), actual);
 		assertEquals(Amount.create(-4),actual);
 	}
@@ -47,7 +47,7 @@ class AmountTest {
 	void 減法のテスト() {
 		Amount seven = Amount.create(7);
 		Amount twelve = Amount.create(12);
-		Amount actual = seven.substract(twelve);
+		Amount actual = seven.minus(twelve);
 		assertEquals(Amount.create(-5), actual);
 		assertNotEquals(Amount.create(-6),actual);
 	}
