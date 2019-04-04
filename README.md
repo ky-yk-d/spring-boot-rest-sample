@@ -8,7 +8,6 @@
 
 ### 考え方／パターン
 
-- [x] Spring Boot
 - [x] RESTful API
 - [ ] 軽量DDD
   - [ ] 値オブジェクト
@@ -21,9 +20,16 @@
 - [ ] CQRS
   - [ ] Event Sourcing
 
-
 ### ツール
 
+- [x] Spring(Boot)
+  - [x] application.yml
+  - [ ] Spring AOP
+  - [ ] Spring Security
+- [ ] ロギング
+  - [x] SLF4J
+  - [ ] Logback
+  - [ ] 構造化ログ
 - BeanMapper
   - [ ] Dozer
 - ORM
